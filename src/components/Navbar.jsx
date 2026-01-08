@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const navLinks = [
-    { label: "HOME", href: "/" },
-    { label: "ABOUT", href: "/about" },
-    { label: "SERVICES", href: "/services" },
-    { label: "CONTACT", href: "/contact" },
+    { label: "HOME", to: "/" },
+    { label: "ABOUT", to: "/about" },
+    { label: "SERVICES", to: "/services" },
+    { label: "CONTACT", to: "/contact" },
   ];
 
   return (
@@ -17,7 +18,7 @@ export default function Navbar() {
 
       <div className="max-w-6xl mx-auto px-4 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand */}
-        <a href="/" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group" onClick={() => setOpen(false)}>
           <div className="relative">
             <img
               src="/images/CGMlogo.png"
@@ -33,24 +34,31 @@ export default function Navbar() {
               Cinematic Global Minds
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-6 font-wave tracking-widest text-xl">
           {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="relative text-slate-200 hover:text-teal-300 transition-colors duration-200"
+            <li key={link.to}>
+              <NavLink
+                to={link.to}
+                className={({ isActive }) =>
+                  `group relative text-slate-200 hover:text-teal-300 transition-colors duration-200 ${
+                    isActive ? "text-teal-300" : ""
+                  }`
+                }
               >
                 <span>{link.label}</span>
-                {/* underline hover */}
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 transition-all duration-300 group-hover:w-full peer-hover:w-full" />
-              </a>
+
+                {/* underline hover + active */}
+                <span
+                  className="absolute left-0 -bottom-1 h-[2px] w-0 bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 transition-all duration-300 group-hover:w-full"
+                />
+              </NavLink>
             </li>
           ))}
 
-          {/* optional CTA */}
+          {/* optional CTA - if this is internal route, use Link. If it's a section on the page, keep <a> */}
           <li>
             <a
               href="#contact"
@@ -83,16 +91,21 @@ export default function Navbar() {
       >
         <ul className="px-4 pb-4 pt-2 space-y-2 border-t border-teal-900/60 bg-black/80 backdrop-blur-xl font-heading text-sm">
           {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="block py-2 text-slate-200 hover:text-teal-300 transition-colors"
+            <li key={link.to}>
+              <NavLink
+                to={link.to}
+                className={({ isActive }) =>
+                  `block py-2 transition-colors ${
+                    isActive ? "text-teal-300" : "text-slate-200 hover:text-teal-300"
+                  }`
+                }
                 onClick={() => setOpen(false)}
               >
                 {link.label}
-              </a>
+              </NavLink>
             </li>
           ))}
+
           <li>
             <a
               href="#contact"
