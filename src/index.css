@@ -1,0 +1,127 @@
+@import "tailwindcss";
+@source "./index.html";
+@source "./src/**/*.{js,jsx,ts,tsx}";
+
+/* HEADINGS (Cinzel) */
+@font-face {
+  font-family: "Cinzel";
+  src: url("/fonts/cinzel/Cinzel-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cinzel";
+  src: url("/fonts/cinzel/Cinzel-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* BODY (Bellota) */
+@font-face {
+  font-family: "Bellota";
+  src: url("/fonts/bellota/Bellota-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+/* FANCY (Exmouth) */
+@font-face {
+  font-family: "Exmouth";
+  src: url("/fonts/exmouth/exmouth_.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ROMANTIC (Romantic) */
+@font-face {
+  font-family: "Romantic";
+  src: url("/fonts/romantic/Romantic.TTF") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+/* WAVE (WAVE) */
+@font-face {
+  font-family: "Wave";
+  src: url("/fonts/wave/WAVE.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+/* COOLVETICA (Coolvetica) */
+@font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/coolvetica/Coolvetica Rg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* COOLVETICA (Coolvetica) */
+/* @font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/coolvetica/Coolvetica Rg It.ttf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+} */
+/* COOLVETICA (Coolvetica) */
+/* @font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/coolvetica/Coolvetica Rg Cond.ttf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+} */
+
+/* COOLVETICA (Coolvetica) */
+@font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/coolvetica/Coolvetica Rg Cram.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* COOLVETICA (Coolvetica) */
+/* @font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/coolvetica/Coolvetica Hv Comp.ttf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+} */
+
+.font-heading {
+  font-family: "Cinzel", serif;
+}
+
+.font-body {
+  font-family: "Bellota", sans-serif;
+}
+
+.font-fancy {
+  font-family: "Exmouth", sans-serif;
+}
+
+.font-romantic {
+  font-family: "Romantic", sans-serif;
+}
+
+.font-wave {
+  font-family: "Wave", sans-serif;
+}
+.font-coolvetica {
+  font-family: "Coolvetica", helvetica;
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 1; text-shadow: 0 0 8px #00d4ff, 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 120px #00d4ff; }
+  /* 50% { opacity: 0.5; text-shadow: none; } */
+}
+@keyframes vision {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.vision {
+  animation: sparkle 1s infinite ease-in-out;
+}
