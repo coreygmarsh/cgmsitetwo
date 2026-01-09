@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import CGMShaderBackground from "../components/CGMShaderBackground.jsx";
+
+const FORM_ENDPOINT = "https://formspree.io/f/mwveeakp"; // <-- replace with your Formspree endpoint
+
 const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     projectType: "",
     budget: "",
     timeline: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState({
+    state: "idle", // idle | sending | success | error
     message: "",
   });
 
@@ -19,22 +28,72 @@ const Contact = () => {
         y: (e.clientY / window.innerHeight) * 100,
       });
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    // plug into your backend/email service here
+
+    if (!FORM_ENDPOINT || FORM_ENDPOINT.includes("YOUR_FORM_ID")) {
+      setStatus({
+        state: "error",
+        message:
+          "Missing Formspree endpoint. Replace FORM_ENDPOINT with your Formspree URL.",
+      });
+      return;
+    }
+
+    try {
+      setStatus({ state: "sending", message: "" });
+
+      const payload = {
+        ...formData,
+        _subject: `New CGM contact: ${formData.name} (${formData.projectType || "project"})`,
+        source: "CGM Website Contact Form",
+      };
+
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        setStatus({
+          state: "success",
+          message: "Sent. We’ll get back to you soon.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          projectType: "",
+          budget: "",
+          timeline: "",
+          message: "",
+        });
+      } else {
+        let errMsg = "Something went wrong. Please try again.";
+        try {
+          const data = await res.json();
+          if (data?.errors?.length) errMsg = data.errors[0].message || errMsg;
+        } catch {}
+        setStatus({ state: "error", message: errMsg });
+      }
+    } catch (err) {
+      setStatus({
+        state: "error",
+        message: "Network error. Please try again in a moment.",
+      });
+    }
   };
 
   return (
@@ -43,6 +102,7 @@ const Contact = () => {
       className="relative min-h-screen bg-black text-white overflow-hidden"
     >
       <CGMShaderBackground className="opacity-70" />
+
       {/* Background blobs */}
       <div className="absolute inset-0 -z-10">
         <motion.div
@@ -162,10 +222,27 @@ const Contact = () => {
             transition={{ duration: 0.7 }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-teal-500/8 to-cyan-500/8" />
+
             <form
               onSubmit={handleSubmit}
               className="relative space-y-6 font-coolvetica text-sm md:text-base"
             >
+              {/* Status */}
+              {status.state !== "idle" && (
+                <div
+                  className={[
+                    "rounded-2xl border px-4 py-3 text-sm backdrop-blur-xl",
+                    status.state === "success"
+                      ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-200"
+                      : status.state === "error"
+                      ? "border-rose-500/40 bg-rose-500/10 text-rose-200"
+                      : "border-slate-700/60 bg-slate-900/40 text-slate-200",
+                  ].join(" ")}
+                >
+                  {status.state === "sending" ? "Sending..." : status.message}
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-xs uppercase tracking-[0.25em] text-slate-400 mb-2 font-coolvetica">
@@ -271,13 +348,17 @@ const Contact = () => {
 
               <motion.button
                 type="submit"
-                className="group relative mt-2 inline-flex items-center justify-center px-10 py-4 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 font-heading text-sm md:text-base font-semibold text-white overflow-hidden shadow-[0_0_40px_rgba(20,184,166,0.7)]"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                disabled={status.state === "sending"}
+                className={[
+                  "group relative mt-2 inline-flex items-center justify-center px-10 py-4 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 font-heading text-sm md:text-base font-semibold text-white overflow-hidden shadow-[0_0_40px_rgba(20,184,166,0.7)] transition-opacity",
+                  status.state === "sending" ? "opacity-70 cursor-not-allowed" : "",
+                ].join(" ")}
+                whileHover={status.state === "sending" ? undefined : { scale: 1.03 }}
+                whileTap={status.state === "sending" ? undefined : { scale: 0.97 }}
               >
                 <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 blur-xl opacity-40 group-hover:opacity-90 transition-opacity duration-500" />
                 <span className="relative z-10 flex items-center gap-3">
-                  <span>Send to CGM</span>
+                  <span>{status.state === "sending" ? "Sending..." : "Send to CGM"}</span>
                   <svg
                     className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
                     fill="none"
@@ -316,13 +397,11 @@ const Contact = () => {
                   Creative Hub Signal
                 </p>
                 <p className="font-heading text-lg mb-2">
-                  Best for concept decks, launch pipelines, and worldbuilding
-                  briefs.
+                  Best for concept decks, launch pipelines, and worldbuilding briefs.
                 </p>
                 <p className="text-sm font-coolvetica text-slate-300">
                   If you&apos;re not sure where your idea lives yet; whether it&apos;s film,
-                  interactive, or somewhere in-between—that&apos;s exactly what
-                  this form is for.
+                  interactive, or somewhere in-between—that&apos;s exactly what this form is for.
                 </p>
               </div>
             </div>

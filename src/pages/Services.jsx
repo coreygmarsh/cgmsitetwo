@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import CGMShaderBackground from "../components/CGMShaderBackground"; // adjust path if needed
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -142,11 +143,9 @@ function Services() {
                 transition={{ duration: 0.7, delay: 0.15 }}
               >
                 CGM is where{" "}
-                <span className="text-emerald-300">
-                  3D, motion, and identity
-                </span>{" "}
-                work together. Whether you’re launching a product, a season, or
-                a whole universe, we design visuals that feel cinematic and live
+                <span className="text-emerald-300">3D, motion, and identity</span>{" "}
+                work together. Whether you’re launching a product, a season, or a
+                whole universe, we design visuals that feel cinematic and live
                 comfortably online.
               </motion.p>
             </div>
@@ -348,9 +347,11 @@ function Services() {
               services plug into your pipeline first, and how to scale your
               visuals over time.
             </p>
+
+            {/* ✅ FIXED LINKS (React Router) */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="group relative px-9 py-3 rounded-full text-sm font-heading font-semibold bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-[0_0_40px_rgba(16,185,129,0.9)] hover:shadow-[0_0_60px_rgba(16,185,129,1)] overflow-hidden transition-all"
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -370,13 +371,14 @@ function Services() {
                   </svg>
                 </span>
                 <span className="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[140%] transition-transform duration-[1100ms] bg-gradient-to-r from-transparent via-white/35 to-transparent" />
-              </a>
-              <a
-                href="/about"
+              </Link>
+
+              <Link
+                to="/about"
                 className="px-8 py-3 rounded-full text-sm font-heading font-semibold border border-emerald-500/50 text-emerald-200 bg-black/60 hover:bg-emerald-500/10 transition-all"
               >
                 Learn more about CGM
-              </a>
+              </Link>
             </div>
           </motion.div>
         </section>

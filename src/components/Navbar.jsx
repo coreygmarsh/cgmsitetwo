@@ -60,13 +60,16 @@ export default function Navbar() {
 
           {/* optional CTA - if this is internal route, use Link. If it's a section on the page, keep <a> */}
           <li>
-            <a
-              href="#contact"
-              className="ml-2 px-4 py-2 font-heading rounded-full text-xs font-semibold bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-[0_0_24px_rgba(20,184,166,0.8)] hover:shadow-[0_0_40px_rgba(20,184,166,1)] transition-all duration-300"
-            >
-              Visit Portfolio
-            </a>
-          </li>
+  <Link
+    to="https://www.coreygmarsh.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="ml-2 px-4 py-2 font-heading rounded-full text-xs font-semibold bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-[0_0_24px_rgba(20,184,166,0.8)] hover:shadow-[0_0_40px_rgba(20,184,166,1)] transition-all duration-300"
+  >
+    Visit Portfolio
+  </Link>
+</li>
+
         </ul>
 
         {/* Mobile menu button */}

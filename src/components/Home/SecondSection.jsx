@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const SecondSection = () => {
   const sectionRef = useRef(null);
-  const canvasRef = useRef(null);
 
   const [hoveredCard, setHoveredCard] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
@@ -62,97 +62,6 @@ const SecondSection = () => {
     },
   ];
 
-  // Caustics effect (matching HeroSection)
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const setSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    setSize();
-
-    let time = 0;
-    let animationId;
-
-    const drawCaustics = () => {
-      if (!canvas || !ctx) return;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Caustic wave layers
-      for (let layer = 0; layer < 3; layer++) {
-        ctx.beginPath();
-        const numPoints = 100;
-        const amplitude = 40 + layer * 15;
-        const frequency = 0.005 - layer * 0.001;
-        const speed = 0.02 + layer * 0.01;
-
-        for (let i = 0; i <= numPoints; i++) {
-          const x = (canvas.width / numPoints) * i;
-          const y =
-            canvas.height * 0.3 +
-            Math.sin(x * frequency + time * speed) * amplitude +
-            Math.sin(x * frequency * 2 + time * speed * 1.3) *
-              (amplitude * 0.5) +
-            Math.cos(x * frequency * 0.8 + time * speed * 0.7) *
-              (amplitude * 0.3);
-
-          if (i === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-
-        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        const alpha = 0.08 - layer * 0.02;
-        gradient.addColorStop(0, `rgba(34, 211, 238, ${alpha})`);
-        gradient.addColorStop(0.5, `rgba(20, 184, 166, ${alpha * 0.7})`);
-        gradient.addColorStop(1, `rgba(16, 185, 129, ${alpha * 0.3})`);
-
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-
-      // Floating light particles
-      for (let i = 0; i < 15; i++) {
-        const x = ((i * canvas.width) / 15 + time * 20) % canvas.width;
-        const y = canvas.height * 0.4 + Math.sin(time * 0.8 + i) * 100;
-        const size = 2 + Math.sin(time * 2 + i) * 1.5;
-
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        const glow = ctx.createRadialGradient(x, y, 0, x, y, size * 4);
-        glow.addColorStop(0, "rgba(34, 211, 238, 0.3)");
-        glow.addColorStop(1, "rgba(34, 211, 238, 0)");
-        ctx.fillStyle = glow;
-        ctx.fill();
-      }
-
-      time += 0.015;
-      animationId = requestAnimationFrame(drawCaustics);
-    };
-
-    drawCaustics();
-
-    const handleResize = () => {
-      setSize();
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   // Mouse glow
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -161,7 +70,7 @@ const SecondSection = () => {
         y: (e.clientY / window.innerHeight) * 100,
       });
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
@@ -170,14 +79,11 @@ const SecondSection = () => {
       ref={sectionRef}
       className="relative min-h-screen bg-black py-28 px-6 overflow-hidden"
     >
-      {/* Caustics canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-60"
-        style={{ mixBlendMode: "screen" }}
-      />
-
-      {/* Lava lamp blobs (matching Hero) */}
+      {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.16]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      </div>
+      {/* Lava lamp blobs (kept) */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute w-[600px] h-[600px] rounded-full bg-blue-600/35 blur-[120px]"
@@ -186,15 +92,8 @@ const SecondSection = () => {
             y: ["20%", "60%", "30%", "70%", "20%"],
             scale: [1, 1.3, 0.9, 1.2, 1],
           }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{
-            left: "10%",
-            top: "10%",
-          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          style={{ left: "10%", top: "10%" }}
         />
 
         <motion.div
@@ -210,10 +109,7 @@ const SecondSection = () => {
             ease: "easeInOut",
             delay: 3,
           }}
-          style={{
-            right: "10%",
-            top: "20%",
-          }}
+          style={{ right: "10%", top: "20%" }}
         />
 
         <motion.div
@@ -229,10 +125,7 @@ const SecondSection = () => {
             ease: "easeInOut",
             delay: 6,
           }}
-          style={{
-            left: "30%",
-            bottom: "10%",
-          }}
+          style={{ left: "30%", bottom: "10%" }}
         />
 
         <motion.div
@@ -248,10 +141,7 @@ const SecondSection = () => {
             ease: "easeInOut",
             delay: 9,
           }}
-          style={{
-            right: "20%",
-            bottom: "15%",
-          }}
+          style={{ right: "20%", bottom: "15%" }}
         />
 
         <motion.div
@@ -267,10 +157,7 @@ const SecondSection = () => {
             ease: "easeInOut",
             delay: 12,
           }}
-          style={{
-            left: "25%",
-            top: "30%",
-          }}
+          style={{ left: "25%", top: "30%" }}
         />
       </div>
 
@@ -278,43 +165,11 @@ const SecondSection = () => {
       <div
         className="absolute inset-0 opacity-50 pointer-events-none transition-all duration-500 ease-out"
         style={{
-          background: `radial-gradient(ellipse 800px 600px at ${mousePosition.x}% ${mousePosition.y}%, rgba(34, 211, 238, 0.3) 0%, rgba(20, 184, 166, 0.1) 50%, transparent 70%)`,
+          background: `radial-gradient(ellipse 800px 600px at ${mousePosition.x}% ${mousePosition.y}%, rgba(34, 211, 238, 0.28) 0%, rgba(20, 184, 166, 0.10) 50%, transparent 70%)`,
         }}
       />
 
-      {/* Floating bubbles / particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${100 + Math.random() * 20}%`,
-              width: `${4 + Math.random() * 8}px`,
-              height: `${4 + Math.random() * 8}px`,
-              background:
-                "radial-gradient(circle, rgba(34, 211, 238, 0.6) 0%, rgba(34, 211, 238, 0.1) 70%, transparent 100%)",
-              boxShadow:
-                "0 0 20px rgba(34, 211, 238, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3)",
-            }}
-            animate={{
-              y: [0, -window.innerHeight - 100],
-              x: [0, Math.sin(i) * 50, 0],
-              scale: [1, 1.2, 0.8, 1],
-              opacity: [0, 0.8, 0.8, 0],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 6,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Light rays */}
+      {/* Light rays (kept) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
         {[...Array(12)].map((_, i) => (
           <motion.div
@@ -322,13 +177,13 @@ const SecondSection = () => {
             className="absolute left-1/2 top-0 w-2 h-full origin-top"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(34, 211, 238, 0.4) 0%, rgba(20, 184, 166, 0.2) 30%, transparent 60%)",
+                "linear-gradient(to bottom, rgba(34, 211, 238, 0.35) 0%, rgba(20, 184, 166, 0.18) 30%, transparent 60%)",
               transform: `translateX(-50%) rotate(${-30 + i * 5}deg)`,
               filter: "blur(2px)",
             }}
             animate={{
-              opacity: [0.2, 0.5, 0.2],
-              scaleY: [0.8, 1.2, 0.8],
+              opacity: [0.18, 0.5, 0.18],
+              scaleY: [0.85, 1.15, 0.85],
             }}
             transition={{
               duration: 5 + i * 0.3,
@@ -340,37 +195,15 @@ const SecondSection = () => {
         ))}
       </div>
 
-      {/* Animated grid */}
-      <div className="absolute inset-0 opacity-8">
-        <motion.div
-          className="absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.15)_1px,transparent_1px)] bg-[size:100px_100px]"
-          animate={{
-            backgroundPosition: ["0px 0px", "100px 100px"],
-            opacity: [0.05, 0.15, 0.05],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      </div>
-
       {/* Top reflection */}
       <motion.div
         className="absolute top-0 left-0 right-0 h-40 opacity-30 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(34, 211, 238, 0.3) 0%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(34, 211, 238, 0.25) 0%, transparent 100%)",
         }}
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        animate={{ opacity: [0.18, 0.4, 0.18] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
 
       {/* Grain texture */}
@@ -386,7 +219,7 @@ const SecondSection = () => {
 
       {/* CONTENT */}
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* 🔹 Centered Header */}
+        {/* Centered Header */}
         <motion.div
           className="flex flex-col items-center justify-center gap-8 mb-20 text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -404,7 +237,7 @@ const SecondSection = () => {
 
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
               <motion.span
-                className="block text-transparent  font-heading bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-sky-300"
+                className="block text-transparent font-heading bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-sky-300"
                 style={{
                   filter: "drop-shadow(0 0 40px rgba(59,130,246,0.6))",
                 }}
@@ -422,8 +255,8 @@ const SecondSection = () => {
             </h2>
 
             <p className="text-slate-200 font-coolvetica text-lg md:text-xl max-w-2xl mx-auto">
-              Every service is another lens we use to build worlds, guide
-              emotion, and keep your story cohesive across every platform.
+              Every service is another lens we use to build worlds, guide emotion,
+              and keep your story cohesive across every platform.
             </p>
           </div>
         </motion.div>
@@ -488,17 +321,14 @@ const SecondSection = () => {
                   }}
                 />
 
-                {/* Title */}
                 <h3 className="text-xl md:text-2xl font-heading font-semibold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-300 group-hover:to-cyan-300 transition-all duration-500">
                   {service.title}
                 </h3>
 
-                {/* Description */}
                 <p className="text-slate-300 font-coolvetica text-sm md:text-base leading-relaxed mb-4 group-hover:text-slate-100 transition-colors duration-500">
                   {service.desc}
                 </p>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {service.tags.map((tag) => (
                     <span
@@ -508,31 +338,6 @@ const SecondSection = () => {
                       {tag}
                     </span>
                   ))}
-                </div>
-
-                {/* Explore row */}
-                <div className="flex items-center justify-between text-cyan-300 text-sm">
-                  <div className="flex items-center gap-2 opacity-70 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="font-semibold">
-                      See how it integrates
-                    </span>
-                    <svg
-                      className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-[11px] text-slate-500 uppercase tracking-[0.2em]">
-                    CGM / {service.id.toString().padStart(2, "0")}
-                  </span>
                 </div>
 
                 {/* Shimmer */}
@@ -546,30 +351,33 @@ const SecondSection = () => {
 
         {/* Bottom CTA */}
         <motion.div style={{ y: ctaY }} className="text-center mt-20">
-          <motion.button
-            className="group relative px-11 py-4 bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 rounded-full font-bold text-lg md:text-xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(59,130,246,0.8)]"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 rounded-full blur-xl opacity-40 group-hover:opacity-90 transition-opacity duration-500" />
-            <span className="relative z-10 flex items-center gap-3 justify-center font-heading">
-              <span>Design a pipeline for your launch</span>
-              <svg
-                className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </span>
-            <div className="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[140%] transition-transform duration-[1100ms] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-          </motion.button>
+          <Link to="/contact" className="inline-block">
+            <motion.button
+              type="button"
+              className="group relative px-11 py-4 bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 rounded-full font-bold text-lg md:text-xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(59,130,246,0.8)]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 rounded-full blur-xl opacity-40 group-hover:opacity-90 transition-opacity duration-500" />
+              <span className="relative z-10 flex items-center gap-3 justify-center font-heading">
+                <span>Design a pipeline for your launch</span>
+                <svg
+                  className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </span>
+              <div className="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[140%] transition-transform duration-[1100ms] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

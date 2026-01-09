@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -56,18 +57,19 @@ const Footer = () => {
             </h3>
             <p className="text-sm sm:text-base text-slate-400 font-coolvetica leading-relaxed">
               Crafting immersive visuals, stories, and experiences that feel
-              like they live <span className="text-teal-300">between worlds</span> — underwater, in
-              the clouds, and through your vision.
+              like they live{" "}
+              <span className="text-teal-300">between worlds</span> — underwater,
+              in the clouds, and through your vision.
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation (React Router Links) */}
           <div className="flex flex-col sm:items-end gap-4 text-sm sm:text-base">
             <div className="flex flex-wrap justify-center font-wave sm:justify-end gap-4 sm:gap-6">
-              <FooterLink href="#home">Home</FooterLink>
-              <FooterLink href="#about">About</FooterLink>
-              <FooterLink href="#services">Services</FooterLink>
-              <FooterLink href="#contact">Contact</FooterLink>
+              <FooterLink to="/">Home</FooterLink>
+              <FooterLink to="/about">About</FooterLink>
+              <FooterLink to="/services">Services</FooterLink>
+              <FooterLink to="/contact">Contact</FooterLink>
             </div>
 
             {/* Social row */}
@@ -93,15 +95,16 @@ const Footer = () => {
   );
 };
 
-const FooterLink = ({ href, children }) => (
-  <motion.a
-    href={href}
-    className="relative text-slate-300 hover:text-teal-300 transition-colors"
-    whileHover={{ y: -2 }}
-  >
-    {children}
-    <span className="absolute left-0 -bottom-1 w-0 h-px bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 group-hover:w-full transition-all duration-300" />
-  </motion.a>
+const FooterLink = ({ to, children }) => (
+  <motion.div whileHover={{ y: -2 }} className="relative">
+    <Link
+      to={to}
+      className="group relative text-slate-300 hover:text-teal-300 transition-colors"
+    >
+      {children}
+      <span className="absolute left-0 -bottom-1 w-0 h-px bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 group-hover:w-full transition-all duration-300" />
+    </Link>
+  </motion.div>
 );
 
 const FooterPill = ({ children }) => (

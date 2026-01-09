@@ -151,6 +151,10 @@ const SectionThree = () => {
         className="absolute inset-0 w-full h-full pointer-events-none opacity-50"
         style={{ mixBlendMode: "screen" }}
       />
+      {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.16]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      </div>
 
       {/* Underwater blobs */}
       <div className="absolute inset-0">
