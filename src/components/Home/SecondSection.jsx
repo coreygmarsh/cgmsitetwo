@@ -80,7 +80,7 @@ const SecondSection = () => {
       className="relative min-h-screen bg-black py-28 px-6 overflow-hidden"
     >
       {/* Grid overlay */}
-        <div className="absolute inset-0 opacity-[0.16]">
+        <div className="absolute inset-0 opacity-[0.06]">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
       </div>
       {/* Lava lamp blobs (kept) */}
@@ -170,7 +170,7 @@ const SecondSection = () => {
       />
 
       {/* Light rays (kept) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+      {/* <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
@@ -193,7 +193,7 @@ const SecondSection = () => {
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Top reflection */}
       <motion.div

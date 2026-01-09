@@ -20,6 +20,11 @@ const About = () => {
       <CGMShaderBackground className="opacity-70" />
       {/* Background blobs */}
       <div className="absolute inset-0 -z-10">
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.46]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      </div>
+
         <motion.div
           className="absolute w-[800px] h-[800px] rounded-full bg-emerald-500/30 blur-[150px]"
           animate={{
@@ -72,6 +77,7 @@ const About = () => {
             backgroundSize: "3px 3px",
           }}
         />
+        
         {/* animated grid */}
         <motion.div
           className="absolute inset-0 opacity-[0.09]"
@@ -83,6 +89,10 @@ const About = () => {
             backgroundSize: "110px 110px",
           }}
         />
+      </div>
+       {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.06]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
       </div>
 
       {/* Mouse glow */}

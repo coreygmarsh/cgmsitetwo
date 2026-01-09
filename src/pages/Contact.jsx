@@ -428,7 +428,7 @@ const Contact = () => {
                   <p className="text-slate-200">
                     You can also reach us at{" "}
                     <span className="text-emerald-300">
-                      hello@cinematicglobalminds.com
+                      corey@cgmcreativesolutions.com
                     </span>{" "}
                     with reels, decks, or references.
                   </p>

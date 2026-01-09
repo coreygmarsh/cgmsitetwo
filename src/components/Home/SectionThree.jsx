@@ -152,7 +152,7 @@ const SectionThree = () => {
         style={{ mixBlendMode: "screen" }}
       />
       {/* Grid overlay */}
-        <div className="absolute inset-0 opacity-[0.16]">
+        <div className="absolute inset-0 opacity-[0.06]">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
       </div>
 
@@ -232,7 +232,7 @@ const SectionThree = () => {
       </div>
 
       {/* Underwater light rays */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-15">
+      {/* <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-15">
         {[...Array(10)].map((_, i) => (
           <motion.div
             key={i}
@@ -255,7 +255,7 @@ const SectionThree = () => {
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Cursor follower */}
       <div

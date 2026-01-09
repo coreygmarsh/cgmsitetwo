@@ -46,7 +46,7 @@ const ValuesBanner = () => {
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               repeat: Infinity,
-              duration: 40,
+              duration: 10,
               ease: "linear",
             }}
           >
@@ -57,13 +57,15 @@ const ValuesBanner = () => {
               >
                 {/* glowing dot */}
                 <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_16px_rgba(16,185,129,1)]" />
+
                 {/* value pill */}
                 <div className="px-5 py-2 backdrop-blur-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                  {/* STACKED: title then description */}
+                  <div className="flex flex-col leading-tight">
                     <span className="text-xs sm:text-sm font-heading tracking-[0.18em] uppercase text-teal-100">
                       {item.label}
                     </span>
-                    <span className="hidden sm:inline-block text-[11px] text-slate-400 font-coolvetica">
+                    <span className="text-[11px] text-slate-400 font-coolvetica mt-1">
                       {item.tag}
                     </span>
                   </div>

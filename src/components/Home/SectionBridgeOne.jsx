@@ -18,8 +18,17 @@ const CompaniesBanner = ({ logos = defaultLogos }) => {
       <div className="absolute inset-0 pointer-events-none opacity-[0.18]">
         <div className="w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.45)_1px,transparent_0)] bg-[size:18px_18px]" />
       </div>
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.26]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      </div>
+
 
       <div className="relative overflow-hidden border-y border-teal-900/60 bg-gradient-to-b from-slate-950 via-black to-slate-950 py-10 md:py-12">
+       {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.06]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      </div>
         {/* Top & bottom dashed lines */}
         <div className="absolute inset-x-0 top-8 border-t border-dashed border-slate-700/40" />
         <div className="absolute inset-x-0 bottom-8 border-t border-dashed border-slate-700/40" />

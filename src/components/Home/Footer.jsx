@@ -87,7 +87,7 @@ const Footer = () => {
           <p>© {new Date().getFullYear()} Cinematic Global Minds. All rights reserved.</p>
           <p className="flex items-center gap-1">
             <span className="text-teal-300">●</span>
-            Designed in motion & light.
+            Design Your Dreams
           </p>
         </div>
       </div>

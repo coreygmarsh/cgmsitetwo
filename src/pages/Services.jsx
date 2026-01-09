@@ -109,6 +109,10 @@ function Services() {
 
       {/* dark overlay for contrast */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b mask-b-from-cyan-600/80 via-black/60 to-black/90" />
+       {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.06]">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-32 pb-24">
         {/* Hero */}
