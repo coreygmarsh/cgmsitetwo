@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import CGMShaderBackground from "../CGMShaderBackground.jsx";
@@ -6,86 +6,84 @@ import CGMShaderBackground from "../CGMShaderBackground.jsx";
 const MotionLink = motion(Link);
 
 const SectionFive = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const [fxOn, setFxOn] = useState(false);
   const [email, setEmail] = useState("");
 
-  // useEffect(() => {
-  //   const handleMouseMove = (e) => {
-  //     setMousePosition({
-  //       x: (e.clientX / window.innerWidth) * 100,
-  //       y: (e.clientY / window.innerHeight) * 100,
-  //     });
-  //   };
-  //   window.addEventListener("mousemove", handleMouseMove, { passive: true });
-  //   return () => window.removeEventListener("mousemove", handleMouseMove);
-  // }, []);
+  // Defer heavy visuals until after first paint
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      const t = setTimeout(() => setFxOn(true), 150);
+      return () => clearTimeout(t);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Email submitted:", email);
-    // Add your form submission logic here
   };
 
   return (
     <section className="relative min-h-screen bg-black py-32 px-6 overflow-hidden flex items-center justify-center">
-      <CGMShaderBackground className="opacity-30" />
+      {/* Shader: defer (big win) */}
+      {fxOn && <CGMShaderBackground className="opacity-30" />}
 
-      {/* Lava lamp background */}
-      <div className="absolute inset-0">
-        <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full bg-cyan-600/30 blur-[150px]"
-          animate={{
-            x: ["0%", "60%", "30%", "70%", "0%"],
-            y: ["0%", "50%", "70%", "20%", "0%"],
-            scale: [1, 1.4, 0.9, 1.2, 1],
-          }}
-          transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute w-[700px] h-[700px] rounded-full bg-teal-600/25 blur-[140px]"
-          animate={{
-            x: ["70%", "10%", "80%", "20%", "70%"],
-            y: ["20%", "70%", "30%", "60%", "20%"],
-            scale: [1.2, 0.8, 1.3, 1, 1.2],
-          }}
-          transition={{
-            duration: 32,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 4,
-          }}
-          style={{ right: 0 }}
-        />
-        <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full bg-green-600/20 blur-[130px]"
-          animate={{
-            x: ["50%", "20%", "60%", "40%", "50%"],
-            y: ["60%", "20%", "80%", "30%", "60%"],
-            scale: [0.9, 1.3, 1, 1.2, 0.9],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 8,
-          }}
-          style={{ left: "20%", bottom: 0 }}
-        />
-      </div>
+      {/* Lava lamp background (defer + cheaper blur + willChange) */}
+      {fxOn && (
+        <div className="absolute inset-0">
+          <motion.div
+            className="absolute w-[800px] h-[800px] rounded-full bg-cyan-600/26 blur-[140px]"
+            style={{ willChange: "transform" }}
+            animate={{
+              x: ["0%", "60%", "30%", "70%", "0%"],
+              y: ["0%", "50%", "70%", "20%", "0%"],
+              scale: [1, 1.35, 0.95, 1.2, 1],
+            }}
+            transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute w-[700px] h-[700px] rounded-full bg-teal-600/22 blur-[130px]"
+            style={{ right: 0, willChange: "transform" }}
+            animate={{
+              x: ["70%", "10%", "80%", "20%", "70%"],
+              y: ["20%", "70%", "30%", "60%", "20%"],
+              scale: [1.15, 0.88, 1.25, 1, 1.15],
+            }}
+            transition={{
+              duration: 32,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4,
+            }}
+          />
+          <motion.div
+            className="absolute w-[600px] h-[600px] rounded-full bg-green-600/18 blur-[120px]"
+            style={{ left: "20%", bottom: 0, willChange: "transform" }}
+            animate={{
+              x: ["50%", "20%", "60%", "40%", "50%"],
+              y: ["60%", "20%", "80%", "30%", "60%"],
+              scale: [0.95, 1.25, 1, 1.15, 0.95],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 8,
+            }}
+          />
+        </div>
+      )}
 
-      {/* Cursor follower */}
+      {/* Static ambient glow (NO mouse-follow, no fixed positioning) */}
       <div
-        className="pointer-events-none fixed w-[500px] h-[500px] rounded-full blur-3xl opacity-20 transition-all duration-500 ease-out z-0"
+        className="pointer-events-none absolute inset-0 opacity-20 z-0"
         style={{
           background:
-            "radial-gradient(circle, rgba(20,184,166,0.6) 0%, transparent 70%)",
-          left: `${mousePosition.x}%`,
-          top: `${mousePosition.y}%`,
-          transform: "translate(-50%, -50%)",
+            "radial-gradient(circle at 50% 55%, rgba(20,184,166,0.45) 0%, rgba(20,184,166,0.12) 35%, transparent 70%)",
         }}
       />
 
-      {/* Animated grid */}
+      {/* Animated grid (static; cheap) */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.3)_1px,transparent_1px)] bg-[size:100px_100px]" />
       </div>
@@ -144,30 +142,23 @@ const SectionFive = () => {
 
         {/* CTA Buttons */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center shadow-sparkle justify-center gap-6 mb-20"
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          {/* ✅ Primary CTA → /contact (no href, Router Link) */}
           <MotionLink
             to="/contact"
             className="group relative inline-flex items-center justify-center px-12 py-6 bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 rounded-full font-bold text-2xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_80px_rgba(20,184,166,1)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {/* Glow layers */}
             <div className="absolute -inset-3 bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-
             <span className="relative z-10 text-2xl font-heading tracking-wide flex items-center gap-3">
               <span>Let&apos;s Talk</span>
             </span>
-
-            {/* Shine effect */}
             <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
-            {/* Pulse ring */}
             <motion.div
               className="absolute inset-0 rounded-full border-2 border-white/30"
               animate={{ scale: [1, 1.2, 1.2], opacity: [0.5, 0, 0] }}
@@ -175,7 +166,6 @@ const SectionFive = () => {
             />
           </MotionLink>
 
-          {/* Secondary CTA (external link) */}
           <MotionLink
             to="https://coreygmarsh.com"
             target="_blank"

@@ -63,16 +63,16 @@ const SecondSection = () => {
   ];
 
   // Mouse glow
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  // useEffect(() => {
+  //   const handleMouseMove = (e) => {
+  //     setMousePosition({
+  //       x: (e.clientX / window.innerWidth) * 100,
+  //       y: (e.clientY / window.innerHeight) * 100,
+  //     });
+  //   };
+  //   window.addEventListener("mousemove", handleMouseMove, { passive: true });
+  //   return () => window.removeEventListener("mousemove", handleMouseMove);
+  // }, []);
 
   return (
     <section
@@ -245,7 +245,7 @@ const SecondSection = () => {
                 From concept
               </motion.span>
               <span
-                className="block text-white vision font-wave mt-2"
+                className="block text-white font-wave mt-2"
                 style={{
                   textShadow: "0 0 50px rgba(59, 130, 246, 0.3)",
                 }}

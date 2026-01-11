@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useMemo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import MacysLogo from "/images/logos/Macys-Logo.png";
 
 const SectionThree = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const canvasRef = useRef(null);
 
   const cards = [
@@ -34,76 +32,90 @@ const SectionThree = () => {
     },
   ];
 
-  const companies = [
-    {
-      name: "Macy's",
-      logo: "images/logos/Macys-Logo.png",
-    },
-    {
-      name: "Lifetouch",
-      logo: "images/logos/Lifetouch_logo.png",
-    },
-    {
-      name: "Eternity",
-      logo: "images/logos/etlogo.jpeg",
-    },
-    {
-      name: "Levi's",
-      logo: "images/logos/Levi'slogo.svg",
-    },
-    {
-      name: "trmeric",
-      logo: "images/logos/trmeric-logo.svg",
-    },
-  ];
+  // Seed bubbles once (no rerender reshuffle)
+  const bubbles = useMemo(() => {
+    return Array.from({ length: 16 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: 100 + Math.random() * 20,
+      size: 4 + Math.random() * 7,
+      dur: 9 + Math.random() * 5,
+      delay: Math.random() * 4,
+      drift: (Math.random() - 0.5) * 70,
+    }));
+  }, []);
 
-  // Caustics canvas
+  // Optimized caustics canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    const setSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    setSize();
+    // Perf knobs
+    const DPR_CAP = 1.25; // big win on retina
+    const FPS = 35; // try 30 if you want even lighter
+    const frameInterval = 1000 / FPS;
 
     let time = 0;
-    let animationId;
+    let rafId = 0;
+    let last = performance.now();
 
-    const drawCaustics = () => {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+      const w = Math.floor(window.innerWidth);
+      const h = Math.floor(window.innerHeight);
 
-      for (let layer = 0; layer < 3; layer++) {
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+
+      // draw in CSS pixels
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    resize();
+
+    const draw = (now) => {
+      // FPS cap
+      if (now - last < frameInterval) {
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
+      last = now;
+
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // fewer layers + fewer points
+      const layers = 2;
+      const numPoints = 60;
+
+      for (let layer = 0; layer < layers; layer++) {
         ctx.beginPath();
-        const numPoints = 100;
-        const amplitude = 40 + layer * 15;
-        const frequency = 0.005 - layer * 0.001;
-        const speed = 0.02 + layer * 0.01;
+
+        const amplitude = 30 + layer * 12;
+        const frequency = 0.0045 - layer * 0.0008;
+        const speed = 0.018 + layer * 0.01;
 
         for (let i = 0; i <= numPoints; i++) {
-          const x = (canvas.width / numPoints) * i;
+          const x = (w / numPoints) * i;
           const y =
-            canvas.height * 0.3 +
+            h * 0.3 +
             Math.sin(x * frequency + time * speed) * amplitude +
             Math.sin(x * frequency * 2 + time * speed * 1.3) *
-              amplitude *
-              0.5;
+              (amplitude * 0.45);
 
-          if (i === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
 
-        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        const alpha = 0.08 - layer * 0.02;
+        const alpha = 0.065 - layer * 0.02;
+        const gradient = ctx.createLinearGradient(0, 0, 0, h);
         gradient.addColorStop(0, `rgba(59, 130, 246, ${alpha})`);
         gradient.addColorStop(0.5, `rgba(6, 182, 212, ${alpha * 0.7})`);
         gradient.addColorStop(1, `rgba(14, 165, 233, ${alpha * 0.3})`);
@@ -114,65 +126,61 @@ const SectionThree = () => {
       }
 
       time += 0.015;
-      animationId = requestAnimationFrame(drawCaustics);
+      rafId = requestAnimationFrame(draw);
     };
 
-    drawCaustics();
+    rafId = requestAnimationFrame(draw);
 
-    const handleResize = () => {
-      setSize();
+    const onResize = () => resize();
+    window.addEventListener("resize", onResize, { passive: true });
+
+    // Pause on hidden tab
+    const onVis = () => {
+      if (document.hidden) cancelAnimationFrame(rafId);
+      else rafId = requestAnimationFrame(draw);
     };
-
-    window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", onVis);
 
     return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVis);
     };
-  }, []);
-
-  // Mouse glow
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <section className="relative min-h-screen bg-black py-32 px-6 overflow-hidden">
-      {/* Caustics canvas */}
+      {/* Caustics canvas (optimized) */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none opacity-50"
         style={{ mixBlendMode: "screen" }}
       />
+
       {/* Grid overlay */}
-        <div className="absolute inset-0 opacity-[0.06]">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
+      <div className="absolute inset-0 opacity-[0.06]">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.35)_1px,transparent_1px)] bg-[size:110px_110px]" />
       </div>
 
-      {/* Underwater blobs */}
+      {/* Underwater blobs (slightly reduced blur + willChange) */}
       <div className="absolute inset-0">
         <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full bg-blue-600/30 blur-[150px]"
+          className="absolute w-[800px] h-[800px] rounded-full bg-blue-600/28 blur-[140px]"
+          style={{ willChange: "transform" }}
           animate={{
             x: ["0%", "60%", "30%", "70%", "0%"],
             y: ["0%", "50%", "70%", "20%", "0%"],
-            scale: [1, 1.4, 0.9, 1.2, 1],
+            scale: [1, 1.35, 0.95, 1.2, 1],
           }}
           transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute w-[700px] h-[700px] rounded-full bg-cyan-600/25 blur-[140px]"
+          className="absolute w-[700px] h-[700px] rounded-full bg-cyan-600/22 blur-[130px]"
+          style={{ right: 0, willChange: "transform" }}
           animate={{
             x: ["70%", "10%", "80%", "20%", "70%"],
             y: ["20%", "70%", "30%", "60%", "20%"],
-            scale: [1.2, 0.8, 1.3, 1, 1.2],
+            scale: [1.15, 0.88, 1.25, 1, 1.15],
           }}
           transition={{
             duration: 32,
@@ -180,14 +188,14 @@ const SectionThree = () => {
             ease: "easeInOut",
             delay: 4,
           }}
-          style={{ right: 0 }}
         />
         <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full bg-sky-600/20 blur-[130px]"
+          className="absolute w-[600px] h-[600px] rounded-full bg-sky-600/18 blur-[120px]"
+          style={{ left: "20%", bottom: 0, willChange: "transform" }}
           animate={{
             x: ["50%", "20%", "60%", "40%", "50%"],
             y: ["60%", "20%", "80%", "30%", "60%"],
-            scale: [0.9, 1.3, 1, 1.2, 0.9],
+            scale: [0.95, 1.25, 1, 1.15, 0.95],
           }}
           transition={{
             duration: 30,
@@ -195,81 +203,42 @@ const SectionThree = () => {
             ease: "easeInOut",
             delay: 8,
           }}
-          style={{ left: "20%", bottom: 0 }}
         />
       </div>
 
-      {/* Floating bubbles */}
+      {/* Floating bubbles (seeded) */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {bubbles.map((b) => (
           <motion.div
-            key={i}
+            key={b.id}
             className="absolute rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${100 + Math.random() * 20}%`,
-              width: `${4 + Math.random() * 8}px`,
-              height: `${4 + Math.random() * 8}px`,
+              left: `${b.left}%`,
+              top: `${b.top}%`,
+              width: `${b.size}px`,
+              height: `${b.size}px`,
               background:
-                "radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(59, 130, 246, 0.1) 70%, transparent 100%)",
+                "radial-gradient(circle, rgba(59, 130, 246, 0.55) 0%, rgba(59, 130, 246, 0.1) 70%, transparent 100%)",
               boxShadow:
-                "0 0 20px rgba(59, 130, 246, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3)",
+                "0 0 16px rgba(59, 130, 246, 0.35), inset 0 0 8px rgba(255,255,255,0.22)",
+              willChange: "transform",
             }}
             animate={{
-              y: [0, -window.innerHeight - 100],
-              x: [0, Math.sin(i) * 40, 0],
-              scale: [1, 1.2, 0.8, 1],
-              opacity: [0, 0.8, 0.8, 0],
+              y: [0, -1200],
+              x: [0, b.drift, 0],
+              opacity: [0, 0.75, 0.75, 0],
             }}
             transition={{
-              duration: 8 + Math.random() * 5,
+              duration: b.dur,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: b.delay,
               ease: "easeInOut",
             }}
           />
         ))}
       </div>
 
-      {/* Underwater light rays */}
-      {/* <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-15">
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute left-1/2 top-0 w-2 h-full origin-top"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(59, 130, 246, 0.4) 0%, rgba(6, 182, 212, 0.2) 30%, transparent 60%)",
-              transform: `translateX(-50%) rotate(${-25 + i * 5}deg)`,
-              filter: "blur(2px)",
-            }}
-            animate={{
-              opacity: [0.2, 0.4, 0.2],
-              scaleY: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 5 + i * 0.3,
-              repeat: Infinity,
-              delay: i * 0.4,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div> */}
-
-      {/* Cursor follower */}
-      {/* <div
-        className="pointer-events-none fixed w-[500px] h-[500px] rounded-full blur-3xl opacity-30 transition-all duration-500 ease-out z-0"
-        style={{
-          background:
-            "radial-gradient(ellipse, rgba(59, 130, 246, 0.4) 0%, rgba(6, 182, 212, 0.2) 50%, transparent 70%)",
-          left: `${mousePosition.x}%`,
-          top: `${mousePosition.y}%`,
-          transform: "translate(-50%, -50%)",
-        }}
-      /> */}
-
-      {/* Animated grid */}
+      {/* Animated grid (optional: keep full only if you want) */}
       <div className="absolute inset-0 opacity-8">
         <motion.div
           className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.12)_1px,transparent_1px)] bg-[size:100px_100px]"
@@ -286,7 +255,7 @@ const SectionThree = () => {
         <div className="text-center mb-20">
           <div className="inline-block mb-6">
             <span className="text-emerald-300 text-xs font-heading tracking-[0.4em] uppercase px-8 py-3 border border-cyan-500/40 rounded-full backdrop-blur-xl bg-cyan-500/10 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
-             Our Philosophy
+              Our Philosophy
             </span>
           </div>
 
@@ -296,7 +265,7 @@ const SectionThree = () => {
             </span>
           </h2>
 
-          <p className="text-slate-200 text-xl font-coolvetica max-w-3xl mx-auto ">
+          <p className="text-slate-200 text-xl font-coolvetica max-w-3xl mx-auto">
             Four pillars that define our approach to creating exceptional digital
             experiences.
           </p>
@@ -321,11 +290,11 @@ const SectionThree = () => {
                 {/* Blurred bg */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-b ${card.gradient} opacity-70 group-hover:opacity-90 transition-opacity duration-700`}
-                  style={{ filter: "blur(60px)" }}
+                  style={{ filter: "blur(56px)" }}
                 />
 
                 {/* Shimmer */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-10">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-10 pointer-events-none">
                   <div className="absolute inset-0 translate-y-[-100%] group-hover:translate-y-[100%] transition-transform duration-1500 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
                 </div>
 
@@ -401,7 +370,6 @@ const SectionThree = () => {
           ))}
         </div>
 
-
         {/* Bottom decorative line */}
         <div className="mt-8 flex items-center justify-center gap-8">
           <div className="h-px w-32 bg-gradient-to-r from-transparent to-cyan-400/50" />
@@ -423,19 +391,10 @@ const SectionThree = () => {
       {/* Ripple keyframes */}
       <style>{`
         @keyframes ripple {
-          0% {
-            transform: translate(-50%, -50%) scale(0.8);
-            opacity: 1;
-          }
-          100% {
-            transform: translate(-50%, -50%) scale(2);
-            opacity: 0;
-          }
+          0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+          100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
         }
-
-        .animate-ripple {
-          animation: ripple 2s ease-out infinite;
-        }
+        .animate-ripple { animation: ripple 2s ease-out infinite; }
       `}</style>
     </section>
   );

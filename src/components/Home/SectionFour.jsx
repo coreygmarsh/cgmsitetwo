@@ -147,19 +147,19 @@ const SectionFour = () => {
 
           <h1 className="relative text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-bold text-white">
             <span className="block">
-              <span className="text-emerald-300 vision drop-shadow-[0_0_40px_rgba(16,185,129,1)]">
+              <span className="text-emerald-300">
                 C
               </span>
               inematic
             </span>
             <span className="block mt-2">
-              <span className="text-emerald-300 vision drop-shadow-[0_0_40px_rgba(16,185,129,1)]">
+              <span className="text-emerald-300 text-center">
                 G
               </span>
               lobal
             </span>
             <span className="block mt-2">
-              <span className="text-emerald-300 vision drop-shadow-[0_0_40px_rgba(16,185,129,1)]">
+              <span className="text-emerald-300 ">
                 M
               </span>
               inds

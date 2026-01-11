@@ -67,7 +67,7 @@ export default function Home() {
 
       {loadBelowFold ? (
         <Suspense fallback={<InlineLoader label="Loading sections…" />}>
-          <TracingBeam className="flex-grow">
+          <div className="flex-grow">
             {/* BANNER */}
             <UseCaseBanner />
 
@@ -99,7 +99,8 @@ export default function Home() {
             <div className="bg-gradient-to-b to-slate-800 via-teal-700 pb-1 from-cyan-800">
               <SectionFive />
             </div>
-          </TracingBeam>
+          
+          </div>
         </Suspense>
       ) : (
         // Optional: show nothing or a tiny hint

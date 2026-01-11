@@ -172,7 +172,7 @@ const HeroSection = () => {
       }
 
       // Fewer particles
-      const particles = 10;
+      const particles = 5;
       for (let i = 0; i < particles; i++) {
         const x = (i * w) / particles + ((time * 18) % w);
         const y = h * 0.4 + Math.sin(time * 0.75 + i) * 90;
@@ -233,18 +233,18 @@ const HeroSection = () => {
           animate={{ x: ["-10%", "50%", "80%", "20%", "-10%"], y: ["20%", "60%", "30%", "70%", "20%"], scale: [1, 1.25, 0.95, 1.15, 1] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
+        {/* <motion.div
           className="absolute w-[700px] h-[700px] rounded-full bg-cyan-600/26 blur-[120px]"
           style={{ right: "10%", top: "20%", willChange: "transform" }}
           animate={{ x: ["80%", "20%", "60%", "10%", "80%"], y: ["60%", "10%", "70%", "40%", "60%"], scale: [1.15, 0.85, 1.3, 1, 1.15] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        />
-        <motion.div
+        /> */}
+        {/* <motion.div
           className="absolute w-[550px] h-[550px] rounded-full bg-indigo-600/24 blur-[105px]"
           style={{ left: "30%", bottom: "10%", willChange: "transform" }}
           animate={{ x: ["40%", "-20%", "70%", "30%", "40%"], y: ["70%", "30%", "20%", "80%", "70%"], scale: [0.95, 1.2, 1.05, 0.98, 0.95] }}
           transition={{ duration: 28, repeat: Infinity, ease: "easeInOut", delay: 6 }}
-        />
+        /> */}
       </div>
 
       {/* Mouse glow: full only (lite/off use fixed center) */}
@@ -259,7 +259,7 @@ const HeroSection = () => {
 
 
       {/* Floating bubbles (seeded, reduced on lite) */}
-      {fxOn && bubbleCount > 0 && (
+      {/* {fxOn && bubbleCount > 0 && (
         <div className="absolute inset-0 pointer-events-none">
           {bubbleSeeds.current.slice(0, bubbleCount).map((b) => (
             <motion.div
@@ -289,7 +289,7 @@ const HeroSection = () => {
             />
           ))}
         </div>
-      )}
+      )} */}
 
       {/* Light rays (reduced on lite) */}
       {fxOn && rayCount > 0 && (
@@ -356,7 +356,7 @@ const HeroSection = () => {
           )}
 
           <motion.span
-            className="block font-heading vision text-white mb-2"
+            className="block font-heading text-white mb-2"
             style={{
               textShadow: "0 0 50px rgba(34, 211, 238, 0.55), 0 0 90px rgba(34, 211, 238, 0.25), 0 4px 20px rgba(0,0,0,0.5)",
             }}
@@ -370,7 +370,7 @@ const HeroSection = () => {
           </motion.span>
 
           <motion.span
-            className="block text-transparent font-heading vision bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-sky-300"
+            className="block text-transparent font-heading bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-sky-300"
             style={{ filter: "drop-shadow(0 0 50px rgba(59,130,246,0.75)) drop-shadow(0 0 26px rgba(6,182,212,0.55))" }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
