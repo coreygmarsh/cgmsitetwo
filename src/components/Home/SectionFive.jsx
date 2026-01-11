@@ -9,16 +9,16 @@ const SectionFive = () => {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  // useEffect(() => {
+  //   const handleMouseMove = (e) => {
+  //     setMousePosition({
+  //       x: (e.clientX / window.innerWidth) * 100,
+  //       y: (e.clientY / window.innerHeight) * 100,
+  //     });
+  //   };
+  //   window.addEventListener("mousemove", handleMouseMove, { passive: true });
+  //   return () => window.removeEventListener("mousemove", handleMouseMove);
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

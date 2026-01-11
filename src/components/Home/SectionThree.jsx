@@ -258,7 +258,7 @@ const SectionThree = () => {
       </div> */}
 
       {/* Cursor follower */}
-      <div
+      {/* <div
         className="pointer-events-none fixed w-[500px] h-[500px] rounded-full blur-3xl opacity-30 transition-all duration-500 ease-out z-0"
         style={{
           background:
@@ -267,7 +267,7 @@ const SectionThree = () => {
           top: `${mousePosition.y}%`,
           transform: "translate(-50%, -50%)",
         }}
-      />
+      /> */}
 
       {/* Animated grid */}
       <div className="absolute inset-0 opacity-8">
