@@ -115,7 +115,7 @@ export default function HomeMobile() {
               textShadow: '0 0 40px rgba(59, 130, 246, 0.4)'
             }}
           >
-            Corey G. Marsh
+            Solutions
           </motion.h1>
 
           <motion.p 

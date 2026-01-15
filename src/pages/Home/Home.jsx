@@ -6,12 +6,12 @@ export default function Home() {
   return (
     <>
       {/* Mobile Lite */}
-      <div className="block xl:hidden">
+      <div className="block lg:hidden">
         <HomeMobile />
       </div>
 
       {/* Desktop Full */}
-      <div className="hidden xl:block">
+      <div className="hidden lg:block">
         <HomeDesktop />
       </div>
     </>

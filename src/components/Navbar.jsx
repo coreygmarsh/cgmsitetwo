@@ -88,7 +88,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       <div
-        className={`md:hidden transition-[max-height,opacity] duration-300 overflow-hidden ${
+        className={`xl:hidden transition-[max-height,opacity] duration-300 overflow-hidden ${
           open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
