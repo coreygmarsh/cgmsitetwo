@@ -381,12 +381,12 @@ export default function HomeMobile() {
             <img
               src="/images/CGMlogo.png"
               alt="CGM Creative"
-              className="h-64 w-auto relative z-10"
+              className="h-82 w-auto relative z-10"
             />
           </div>
 
           <motion.p 
-            className="text-xs tracking-[0.28em] uppercase text-cyan-200/70 font-heading"
+            className="text-2xl tracking-[0.28em] uppercase text-cyan-200/70 font-heading"
             animate={{ opacity: [0.7, 1, 0.7] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -394,7 +394,7 @@ export default function HomeMobile() {
           </motion.p>
 
           <motion.div 
-            className="mt-2 h-px w-full bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"
+            className="mt-2 h-px w-screen bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -404,7 +404,7 @@ export default function HomeMobile() {
       </section>
 
       {/* READY TO ELEVATE */}
-      <section id="elevate" className="relative px-5 pt-12 pb-16 z-10">
+      <section id="elevate" className="relative px-5 pt-2 pb-16 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -412,18 +412,18 @@ export default function HomeMobile() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-heading text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">
-            Ready to Elevate?
+            Creatives Backed by Metrics
           </h2>
           <p className="mt-2 text-sm text-white/70">
             Let's build something clean, bold, and story-forward.
           </p>
 
-          <div className="mt-8 grid gap-4">
+          <div className="mt-8 items-center justify-center flex gap-4">
             <motion.a
               className="rounded-2xl px-6 py-4 text-base font-semibold text-center
                          bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 text-white
-                         shadow-[0_0_40px_rgba(59,130,246,0.4)]"
-              href="mailto:hello@yourdomain.com"
+                         shadow-[0_0_40px_rgba(59,130,246,0.4)] w-1/4"
+              href="corey@cgmcreativesolutions.com"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -431,12 +431,12 @@ export default function HomeMobile() {
             </motion.a>
 
             <motion.a
-              className="rounded-2xl border border-cyan-500/50 bg-cyan-500/10 backdrop-blur-xl px-6 py-4 text-base font-semibold text-center text-cyan-200"
+              className="rounded-2xl border border-cyan-500/50 w-1/4 bg-cyan-500/10 backdrop-blur-xl px-6 py-4 text-base font-semibold text-center text-cyan-200"
               href="#"
               whileHover={{ scale: 1.02, backgroundColor: 'rgba(6, 182, 212, 0.15)' }}
               whileTap={{ scale: 0.98 }}
             >
-              LinkedIn
+              Let's Talk
             </motion.a>
           </div>
         </motion.div>
