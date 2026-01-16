@@ -165,7 +165,7 @@ const SectionThree = () => {
       {/* Underwater blobs (slightly reduced blur + willChange) */}
       <div className="absolute inset-0">
         <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full bg-blue-600/28 blur-[140px]"
+          className="absolute w-[800px] h-[800px] rounded-full bg-teal-600/28 blur-[140px]"
           style={{ willChange: "transform" }}
           animate={{
             x: ["0%", "60%", "30%", "70%", "0%"],

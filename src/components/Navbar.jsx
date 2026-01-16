@@ -64,7 +64,7 @@ export default function Navbar() {
     to="https://www.coreygmarsh.com"
     target="_blank"
     rel="noopener noreferrer"
-    className="ml-2 px-4 py-2 font-heading rounded-full text-xs font-semibold bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-[0_0_24px_rgba(20,184,166,0.8)] hover:shadow-[0_0_40px_rgba(20,184,166,1)] transition-all duration-300"
+    className="ml-2 px-4 py-2 font-heading rounded-full text-xs font-semibold bg-gradient-to-r from-teal-500 to-emerald-500 text-white hover:shadow-[0_0_40px_rgba(20,184,166,1)] transition-all duration-300"
   >
     Visit Portfolio
   </Link>

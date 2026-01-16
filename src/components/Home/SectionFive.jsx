@@ -88,11 +88,15 @@ const SectionFive = () => {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.3)_1px,transparent_1px)] bg-[size:100px_100px]" />
       </div>
 
+     
+
       {/* Content */}
+       <div className="bg-black h-full w-full">
       <div className="max-w-5xl mx-auto relative z-10 text-center">
         {/* Top decoration */}
+        <div className="bg-gradient-to-r from-transparent via-black/30 to-black/80 border-2 shadow-2xl shadow-emerald-900 border-teal-600 h-full w-full py-8 px-6 rounded-lg">
         <motion.div
-          className="flex items-center justify-center gap-4 mb-12"
+          className="flex items-center justify-center gap-4 mb-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -102,32 +106,32 @@ const SectionFive = () => {
           <div className="w-3 h-3 rounded-full bg-teal-400 shadow-[0_0_20px_rgba(20,184,166,1)] animate-pulse" />
           <div className="w-24 h-px bg-gradient-to-l from-transparent via-teal-400 to-teal-400" />
         </motion.div>
-
+            
         {/* Main heading */}
         <motion.h2
-          className="text-6xl sm:text-7xl font-heading md:text-8xl lg:text-9xl font-bold mb-8"
+          className="text-6xl sm:text-7xl font-wave md:text-8xl lg:text-9xl font-bold mb-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-green-400 drop-shadow-[0_0_60px_rgba(20,184,166,0.6)]">
-            Ready to
+            CGM Creatives
           </span>
-          <span className="block text-white font-fancy drop-shadow-[0_0_80px_rgba(255,255,255,0.2)] mt-4">
-            elevate your
+          <span className="block text-white font-coolvetica text-4xl italic tracking-wide drop-shadow-[0_0_80px_rgba(255,255,255,0.2)] mt-4">
+            Backed by metrics
           </span>
-          <span className="block relative inline-block mt-4">
+          {/* <span className="block relative inline-block mt-4">
             <span className="text-emerald-300 drop-shadow-[0_0_80px_rgba(16,185,129,1)]">
               brand?
             </span>
             <div className="absolute -inset-4 bg-emerald-400/20 rounded-full blur-3xl -z-10 animate-pulse" />
-          </span>
+          </span> */}
         </motion.h2>
 
         {/* Subheading */}
         <motion.p
-          className="text-slate-300 text-xl font-coolvetica sm:text-2xl mb-16 max-w-3xl mx-auto leading-relaxed"
+          className="text-slate-300 text-xl font-coolvetica sm:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -150,12 +154,12 @@ const SectionFive = () => {
         >
           <MotionLink
             to="/contact"
-            className="group relative inline-flex items-center justify-center px-12 py-6 bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 rounded-full font-bold text-2xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_80px_rgba(20,184,166,1)]"
+            className="group relative inline-flex items-center justify-center px-6 py-4 bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 rounded-full font-bold text-2xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_80px_rgba(20,184,166,1)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <div className="absolute -inset-3 bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-            <span className="relative z-10 text-2xl font-heading tracking-wide flex items-center gap-3">
+            <span className="relative z-10 text-2xl font-coolvetica tracking-wide flex items-center gap-3">
               <span>Let&apos;s Talk</span>
             </span>
             <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
@@ -170,11 +174,11 @@ const SectionFive = () => {
             to="https://coreygmarsh.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center px-12 py-6 backdrop-blur-xl bg-white/5 border-2 border-teal-500/50 rounded-full font-bold text-2xl text-white overflow-hidden transition-all duration-500 hover:bg-white/10 hover:border-teal-400 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)]"
+            className="group inline-flex items-center justify-center px-6 py-4 backdrop-blur-xl bg-white/5 border-2 border-teal-500/50 rounded-full font-bold text-2xl text-white overflow-hidden transition-all duration-500 hover:bg-white/10 hover:border-teal-400 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="relative z-10 font-heading flex items-center gap-3">
+            <span className="relative z-10 font-coolvetica flex items-center gap-3">
               <span className="text-teal-300 group-hover:text-teal-200 transition-colors">
                 View Portfolio
               </span>
@@ -213,6 +217,8 @@ const SectionFive = () => {
             style={{ animationDelay: "0.6s" }}
           />
         </motion.div>
+      </div>
+      </div>
       </div>
     </section>
   );

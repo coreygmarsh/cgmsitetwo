@@ -2,19 +2,79 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const services = [
-  { title: "Video Editing", desc: "Story-first cuts with clean pacing and polish.", icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" },
-  { title: "Social Content", desc: "Systems + content that stay consistent and scalable.", icon: "M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" },
-  { title: "Design", desc: "Clean graphics and branding that hold the vibe.", icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" },
+   {
+      id: 1,
+      title: "Multimedia Editing",
+      desc: "Editing videos, photos, and animations to fit your vision.",
+      gradient: "from-blue-500 to-cyan-500",
+      tags: ["Worldbuilding", "Cinematics"],
+    },
+    {
+      id: 2,
+      title: "Motion Graphics",
+      desc: "Dynamic animations that captivate and guide the eye.",
+      gradient: "from-cyan-500 to-sky-500",
+      tags: ["Openers", "Social Loops"],
+    },
+    {
+      id: 3,
+      title: "Visual Effects",
+      desc: "Seamless compositing, particles, and atmospheric effects.",
+      gradient: "from-sky-500 to-blue-500",
+      tags: ["Compositing", "Simulation"],
+    },
+    {
+      id: 4,
+      title: "Brand Identity",
+      desc: "Distinctive systems that look and feel like your story.",
+      gradient: "from-indigo-500 to-cyan-500",
+      tags: ["Logos", "Systems"],
+    },
+    {
+      id: 5,
+      title: "Digital Experiences",
+      desc: "Interactive web & installations that invite exploration.",
+      gradient: "from-cyan-500 to-teal-500",
+      tags: ["Web", "Interactive"],
+    },
+    {
+      id: 6,
+      title: "Creative Direction",
+      desc: "Guiding the vision from first spark to final frame.",
+      gradient: "from-teal-500 to-cyan-500",
+      tags: ["Strategy", "Story Arcs"],
+    },
 ];
 
 const values = [
-  { title: "Story-First", desc: "Narrative at the center — always.", color: "from-cyan-400 to-blue-400" },
-  { title: "Precision", desc: "Intentional choices, frame-by-frame.", color: "from-blue-400 to-indigo-400" },
-  { title: "Consistency", desc: "Systems and standards, not one-offs.", color: "from-indigo-400 to-cyan-400" },
+  {
+      id: 1,
+      title: "INSPIRE",
+      desc: "Push the boundaries of traditional design.",
+      color: "from-green-500/60 via-green-400/50 to-emerald-600/60",
+    },
+    {
+      id: 2,
+      title: "TRANSFORM",
+      desc: "Transcend the ordinary and introduce innovation.",
+      color: "from-cyan-500/60 via-teal-400/50 to-cyan-600/60",
+    },
+    {
+      id: 3,
+      title: "AMPLIFY",
+      desc: "Challenge conventions and redefine boundaries.",
+      color: "from-cyan-600/60 via-blue-700/50 to-blue-800/60",
+    },
+    {
+      id: 4,
+      title: "ILLUMINATE",
+      desc: "Engage with spaces designed to captivate and envelop.",
+      color: "from-green-200/60 via-emerald-700/50 to-teal-900/60",
+    },
 ];
 
 export default function HomeMobile() {
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  // const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
 
   // useEffect(() => {
   //   const handleMouseMove = (e) => {
@@ -53,7 +113,7 @@ export default function HomeMobile() {
       </div>
 
       {/* Cursor glow */}
-      <div
+      {/* <div
         className="fixed w-[300px] h-[300px] rounded-full blur-3xl opacity-20 pointer-events-none transition-all duration-500 ease-out"
         style={{
           background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%)',
@@ -61,7 +121,7 @@ export default function HomeMobile() {
           top: `${mousePosition.y}%`,
           transform: 'translate(-50%, -50%)'
         }}
-      />
+      /> */}
 
       {/* Floating particles */}
       {/* <div className="fixed inset-0 pointer-events-none">
@@ -205,16 +265,16 @@ export default function HomeMobile() {
             >
               {/* Icon */}
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                {/* <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-[0_0_20px_rgba(59,130,246,0.5)]">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={s.icon} />
                   </svg>
-                </div>
+                </div> */}
 
                 <div className="flex-1 text-left">
-                  <div className="text-[11px] tracking-[0.18em] uppercase text-cyan-300/60 font-heading mb-1">
+                  {/* <div className="text-[11px] tracking-[0.18em] uppercase text-cyan-300/60 font-heading mb-1">
                     Service
-                  </div>
+                  </div> */}
                   <div className="font-heading text-lg font-semibold text-white/95 mb-2">
                     {s.title}
                   </div>
@@ -257,7 +317,7 @@ export default function HomeMobile() {
           </p>
         </motion.div>
 
-        <div className="mt-8 grid gap-4">
+        <div className="mt-8 grid gap-4 flex">
           {values.map((v, i) => (
             <motion.div
               key={v.title}
@@ -269,7 +329,7 @@ export default function HomeMobile() {
                          shadow-[0_0_20px_rgba(59,130,246,0.1)]"
             >
               <motion.div 
-                className={`mx-auto h-3 w-3 rounded-full bg-gradient-to-r ${v.color}`}
+                className={`mx-auto h-3 w-3 flex rounded-full bg-gradient-to-r ${v.color}`}
                 animate={{ 
                   boxShadow: [
                     '0 0 20px rgba(59, 130, 246, 0.6)',
@@ -279,10 +339,10 @@ export default function HomeMobile() {
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <div className="mt-4 font-heading text-lg font-semibold text-white/95">
+              <div className="mt-4 tracking-widest font-wave text-4xl font-semibold text-white/95">
                 {v.title}
               </div>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">
+              <p className="mt-2 text-sm leading-relaxed font-coolvetica italic text-gray-300/70">
                 {v.desc}
               </p>
             </motion.div>

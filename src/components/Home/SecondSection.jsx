@@ -86,7 +86,7 @@ const SecondSection = () => {
       {/* Lava lamp blobs (kept) */}
       <div className="absolute inset-0">
         <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full bg-blue-600/35 blur-[120px]"
+          className="absolute w-[600px] h-[600px] rounded-full bg-teal-600/35 blur-[120px]"
           animate={{
             x: ["-10%", "50%", "80%", "20%", "-10%"],
             y: ["20%", "60%", "30%", "70%", "20%"],
@@ -113,7 +113,7 @@ const SecondSection = () => {
         />
 
         <motion.div
-          className="absolute w-[550px] h-[550px] rounded-full bg-indigo-600/28 blur-[110px]"
+          className="absolute w-[550px] h-[550px] rounded-full bg-green-600/28 blur-[110px]"
           animate={{
             x: ["40%", "-20%", "70%", "30%", "40%"],
             y: ["70%", "30%", "20%", "80%", "70%"],
@@ -145,7 +145,7 @@ const SecondSection = () => {
         />
 
         <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full bg-sky-500/28 blur-[100px]"
+          className="absolute w-[500px] h-[500px] rounded-full bg-teal-500/28 blur-[100px]"
           animate={{
             x: ["20%", "70%", "30%", "60%", "20%"],
             y: ["40%", "20%", "65%", "35%", "40%"],
@@ -283,7 +283,7 @@ const SecondSection = () => {
               />
 
               {/* Card */}
-              <div className="relative h-full backdrop-blur-xl bg-slate-900/60 border border-slate-800/70 rounded-2xl p-7 transition-all duration-500 group-hover:bg-slate-900/80 group-hover:border-cyan-500/60 group-hover:-translate-y-2 group-hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]">
+              <div className="relative h-full backdrop-blur-xl bg-slate-900/60 border border-slate-800/70 rounded-2xl p-7 transition-all duration-500 group-hover:bg-slate-900/80 group-hover:border-teal-500/60 group-hover:-translate-y-2 group-hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]">
                 {/* Badge / index */}
                 <div className="flex items-center justify-between mb-5">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/70 border border-slate-700/80 text-[11px] uppercase tracking-[0.2em] text-slate-300">
@@ -354,11 +354,11 @@ const SecondSection = () => {
           <Link to="/contact" className="inline-block">
             <motion.button
               type="button"
-              className="group relative px-11 py-4 bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 rounded-full font-bold text-lg md:text-xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(59,130,246,0.8)]"
+              className="group relative px-11 py-4 bg-gradient-to-r from-green-500 via-cyan-900 to-sky-500 rounded-full font-bold text-lg md:text-xl text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(59,130,246,0.8)]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 rounded-full blur-xl opacity-40 group-hover:opacity-90 transition-opacity duration-500" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500 via-cyan-900 to-teal-500 rounded-full blur-xl opacity-40 group-hover:opacity-90 transition-opacity duration-500" />
               <span className="relative z-10 flex items-center gap-3 justify-center font-heading">
                 <span>Design a pipeline for your launch</span>
                 <svg

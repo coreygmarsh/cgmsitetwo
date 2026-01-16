@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import CGMShaderBackground from "../CGMShaderBackground";
 
 /**
  * Minimal, high-converting Hero
@@ -49,6 +50,8 @@ const HeroSection = () => {
         <div className="absolute -bottom-28 -right-24 h-80 w-80 rounded-full bg-emerald-500/10 blur-[100px]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent" />
       </div>
+      <CGMShaderBackground/>
+      
 
       {/* content */}
       <motion.div
@@ -57,6 +60,7 @@ const HeroSection = () => {
         animate="show"
         className="relative mx-auto flex min-h-[92vh] max-w-5xl flex-col items-center justify-center px-6 text-center"
       >
+        <div className="bg-gradient-to-r border-2 shadow-2xl shadow-emerald-900 border-teal-600 from-transparent via-black/60 to-black/60 h-full w-full py-4 px-4 rounded-lg">
         {/* micro-tag (positioning) */}
         <motion.div variants={item} className="mb-4">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-heading tracking-[0.28em] uppercase text-white/60">
@@ -64,6 +68,7 @@ const HeroSection = () => {
             CGM Creative Solutions
           </span>
         </motion.div>
+        
 
         {/* headline (benefit-driven) */}
         <motion.h1
@@ -80,18 +85,21 @@ const HeroSection = () => {
         {/* subhead (clarity + audience) */}
         <motion.p
           variants={item}
-          className="mt-5 max-w-xl text-sm leading-relaxed font-coolvetica text-white/70 sm:text-base"
+          className="mt-5 max-w-4xl text-sm items-center justify-center leading-relaxed font-coolvetica text-white/70 sm:text-base"
         >
-          Helping brands and creators ship clean video edits, social assets, and
-          design that feel cinematic — backed by metrics.
+          Helping brands and creators polish clean content, algorithm targeted social assets, and
+          design that feels cinematic — backed by metrics.
         </motion.p>
+           <p className="text-[31px] font-wave tracking-[0.18em] text-white/55">
+            Crafting Worlds • Building Stories • Empowering Vision
+          </p>
 
         {/* proof chips (trust + scannability) */}
         <motion.div
           variants={item}
           className="mt-6 flex  flex-wrap items-center justify-center gap-2"
         >
-          {["Video Editing", "Social Systems", "Brand Design", "Fast Turnarounds"].map(
+          {["Content Editing", "Marketing Focus", "Brand Design", "Fast Turnarounds"].map(
             (label) => (
               <span
                 key={label}
@@ -102,6 +110,8 @@ const HeroSection = () => {
             )
           )}
         </motion.div>
+       
+     
 
         {/* CTA row */}
         <motion.div
@@ -124,18 +134,10 @@ const HeroSection = () => {
                        border border-white/15 bg-white/5 text-white/90
                        active:bg-white/8 active:scale-[0.99] transition sm:w-auto"
           >
-            Email Me
+            Get in Touch
           </a>
         </motion.div>
-
-        {/* secondary CTA (low friction) */}
-        <motion.a
-          variants={item}
-          href="#work"
-          className="mt-6 text-xs font-heading tracking-[0.22em] uppercase text-cyan-100/70 hover:text-cyan-100/90 transition"
-        >
-          View Featured Work ↓
-        </motion.a>
+         </div>
 
         {/* subtle “signature” mark */}
         <motion.div
@@ -146,9 +148,7 @@ const HeroSection = () => {
             className="h-px w-40 bg-gradient-to-r from-transparent via-white/12 to-transparent"
             animate={subtleFloat}
           />
-          <p className="text-[31px] font-wave tracking-[0.18em] text-white/55">
-            Crafting Worlds • Building Stories • Empowering Vision
-          </p>
+          
         </motion.div>
       </motion.div>
     </section>
