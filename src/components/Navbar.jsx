@@ -30,7 +30,7 @@ export default function Navbar() {
           </div>
 
           <div className="hidden sm:flex flex-col leading-tight">
-            <span className="font-fancy vision text-2xl sm:text-3xl text-white group-hover:text-teal-200 transition-colors">
+            <span className="font-fancy text-2xl sm:text-3xl text-white group-hover:text-teal-200 transition-colors">
               Cinematic Global Minds
             </span>
           </div>

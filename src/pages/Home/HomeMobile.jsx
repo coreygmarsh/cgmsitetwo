@@ -16,16 +16,16 @@ const values = [
 export default function HomeMobile() {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  // useEffect(() => {
+  //   const handleMouseMove = (e) => {
+  //     setMousePosition({
+  //       x: (e.clientX / window.innerWidth) * 100,
+  //       y: (e.clientY / window.innerHeight) * 100,
+  //     });
+  //   };
+  //   window.addEventListener('mousemove', handleMouseMove);
+  //   return () => window.removeEventListener('mousemove', handleMouseMove);
+  // }, []);
 
   return (
     <main className="min-h-screen bg-black text-white text-center selection:bg-cyan-500/30 relative overflow-hidden">
@@ -64,7 +64,7 @@ export default function HomeMobile() {
       />
 
       {/* Floating particles */}
-      <div className="fixed inset-0 pointer-events-none">
+      {/* <div className="fixed inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
@@ -87,7 +87,7 @@ export default function HomeMobile() {
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* HERO */}
       <section className="relative px-5 pt-16 pb-12 overflow-hidden flex items-center justify-center">
@@ -98,7 +98,7 @@ export default function HomeMobile() {
           className="mx-auto max-w-[420px] relative z-10"
         >
           <motion.p 
-            className="text-[11px] tracking-[0.28em] uppercase text-cyan-300/70 font-heading"
+            className="text-[31px] uppercase text-cyan-300/70 font-heading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -107,7 +107,7 @@ export default function HomeMobile() {
           </motion.p>
 
           <motion.h1 
-            className="mt-3 font-heading text-[40px] leading-[1.05] font-semibold"
+            className=" font-heading text-[40px] leading-[1.05] font-semibold"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
@@ -124,16 +124,16 @@ export default function HomeMobile() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Crafting Worlds • Building Stories
+            Crafting Worlds • Building Stories • Empowering Vision
           </motion.p>
 
           <motion.p 
-            className="mt-4 text-sm leading-relaxed text-white/70"
+            className="mt-4 text-sm leading-relaxed font-coolvetica text-white/70"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            Story-first video, design, and social media — built with precision and clean visuals.
+            Story-first video, design, and social media — built with precision backed by metrics.
           </motion.p>
 
           <motion.div 
@@ -144,7 +144,7 @@ export default function HomeMobile() {
           >
             <motion.a
               href="#services"
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold
+              className="inline-flex items-center font-coolvetica justify-center rounded-2xl px-5 py-3 text-sm font-semibold
                          bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 text-white
                          shadow-[0_0_30px_rgba(59,130,246,0.4)]"
               whileHover={{ scale: 1.05 }}
@@ -155,7 +155,7 @@ export default function HomeMobile() {
 
             <motion.a
               href="#elevate"
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold
+              className="inline-flex items-center font-coolvetica justify-center rounded-2xl px-5 py-3 text-sm font-semibold
                          border border-cyan-500/50 text-cyan-200
                          bg-cyan-500/10 backdrop-blur-xl"
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(6, 182, 212, 0.15)' }}
@@ -175,7 +175,7 @@ export default function HomeMobile() {
       </section>
 
       {/* SERVICES */}
-      <section id="services" className="relative px-5 py-12 z-10">
+      <section id="services" className="relative px-5 py-4 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -185,7 +185,7 @@ export default function HomeMobile() {
           <h2 className="font-heading text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">
             Services
           </h2>
-          <p className="mt-2 text-sm text-white/60">
+          <p className="mt-2 text-sm font-coolvetica text-white/60">
             Focused offerings — clean execution, strong story.
           </p>
         </motion.div>
