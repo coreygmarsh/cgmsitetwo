@@ -37,7 +37,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-6 font-wave tracking-widest text-xl">
+        <ul className="hidden lg:flex items-center gap-6 font-wave tracking-widest text-xl">
           {navLinks.map((link) => (
             <li key={link.to}>
               <NavLink
@@ -74,7 +74,7 @@ export default function Navbar() {
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden relative z-20 flex items-center justify-center w-10 h-10 rounded-full border border-teal-500/40 bg-black/40 backdrop-blur-xl text-teal-100 hover:border-teal-300 hover:text-teal-200 transition-all"
+          className="xl:hidden relative z-20 flex items-center justify-center w-10 h-10 rounded-full border border-teal-500/40 bg-black/40 backdrop-blur-xl text-teal-100 hover:border-teal-300 hover:text-teal-200 transition-all"
           onClick={() => setOpen((prev) => !prev)}
           aria-label="Toggle navigation"
         >
@@ -88,7 +88,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       <div
-        className={`xl:hidden transition-[max-height,opacity] duration-300 overflow-hidden ${
+        className={`md:hidden transition-[max-height,opacity] duration-300 overflow-hidden ${
           open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
