@@ -171,7 +171,7 @@ const SectionFive = () => {
           </MotionLink>
 
           <MotionLink
-            to="https://coreygmarsh.com"
+            to="https://www.coreygmarsh.com"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center justify-center px-6 py-4 backdrop-blur-xl bg-white/5 border-2 border-teal-500/50 rounded-full font-bold text-2xl text-white overflow-hidden transition-all duration-500 hover:bg-white/10 hover:border-teal-400 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)]"

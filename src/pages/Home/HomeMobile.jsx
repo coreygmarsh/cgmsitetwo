@@ -157,16 +157,25 @@ export default function HomeMobile() {
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-[420px] relative z-10"
         >
-          <motion.p 
+          <div className="rounded-lg">
+                  {/* micro-tag (positioning) */}
+                  <motion.div className="mb-4">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-heading tracking-[0.28em] uppercase text-white/60">
+                      <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-cyan-300 to-emerald-300 opacity-90" />
+                      CGM Creative Solutions
+                    </span>
+                  </motion.div>
+                  </div>
+          {/* <motion.p 
             className="text-[31px] uppercase text-cyan-300/70 font-heading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
             CGM Creative
-          </motion.p>
+          </motion.p> */}
 
-          <motion.h1 
+          {/* <motion.h1 
             className=" font-heading text-[40px] leading-[1.05] font-semibold"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -176,7 +185,7 @@ export default function HomeMobile() {
             }}
           >
             Solutions
-          </motion.h1>
+          </motion.h1> */}
 
           <motion.p 
             className="mt-3 font-wave text-sm tracking-[0.16em] text-cyan-100/80"
@@ -235,7 +244,7 @@ export default function HomeMobile() {
       </section>
 
       {/* SERVICES */}
-      <section id="services" className="relative px-5 py-4 z-10">
+      <section id="services" className="relative px-5 pt-0 pb-4 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -278,7 +287,7 @@ export default function HomeMobile() {
                   <div className="font-heading text-lg font-semibold text-white/95 mb-2">
                     {s.title}
                   </div>
-                  <p className="text-sm leading-relaxed text-white/70 group-hover:text-white/90 transition-colors">
+                  <p className="text-sm leading-relaxed font-coolvetica text-white/70 group-hover:text-white/90 transition-colors">
                     {s.desc}
                   </p>
                 </div>
@@ -312,7 +321,7 @@ export default function HomeMobile() {
           <h2 className="font-heading text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300">
             What Drives Us
           </h2>
-          <p className="mt-2 text-sm text-white/60">
+          <p className="mt-2 text-sm font-coolvetica text-white/60">
             A simple set of principles that keeps every deliverable sharp.
           </p>
         </motion.div>
@@ -414,13 +423,13 @@ export default function HomeMobile() {
           <h2 className="font-heading text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">
             Creatives Backed by Metrics
           </h2>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-sm font-coolvetica text-white/70">
             Let's build something clean, bold, and story-forward.
           </p>
 
           <div className="mt-8 items-center justify-center flex gap-4">
             <motion.a
-              className="rounded-2xl px-6 py-4 text-base font-semibold text-center
+              className="rounded-2xl px-6 font-coolvetica py-4 text-base font-semibold text-center
                          bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-500 text-white
                          shadow-[0_0_40px_rgba(59,130,246,0.4)] w-1/4"
               href="corey@cgmcreativesolutions.com"
@@ -431,7 +440,7 @@ export default function HomeMobile() {
             </motion.a>
 
             <motion.a
-              className="rounded-2xl border border-cyan-500/50 w-1/4 bg-cyan-500/10 backdrop-blur-xl px-6 py-4 text-base font-semibold text-center text-cyan-200"
+              className="rounded-2xl border font-coolvetica border-cyan-500/50 w-1/4 bg-cyan-500/10 backdrop-blur-xl px-6 py-4 text-base font-semibold text-center text-cyan-200"
               href="#"
               whileHover={{ scale: 1.02, backgroundColor: 'rgba(6, 182, 212, 0.15)' }}
               whileTap={{ scale: 0.98 }}
